@@ -51,6 +51,10 @@ h2 {
 	z-index: 1;
 }
 
+#info-box p {
+  margin-bottom: 40px;
+}
+
 #info-box img {
 	position: absolute;
 	right: 8px;
@@ -66,8 +70,8 @@ h2 {
 	border-radius: 0 0 10px 10px;
 }
 </style>
-<script src="jquery-2.2.4.min.js"></script>
-<script src="jquery.svg.pan.zoom.js"></script>
+<script src="libraries/jquery-2.2.4.min.js"></script>
+<script src="libraries/jquery.svg.pan.zoom.js"></script>
 <script type="text/javascript">
 	var library = [
 		{ id: "HoangSa", name: "Hoàng Sa (Đà Nẵng)", number: 65},
@@ -136,16 +140,34 @@ h2 {
 		{ id: "BaRiaVungTau", name: "Bà Rịa - Vũng Tàu", number: 2},
 		{ id: "AnGiang", name: "An Giang", number: 1}
 	];
+
 </script>
+
 <script type="text/javascript">
-	var data = "<img id=\"info-box-close\" src=\"close.png\">";
-	$( document ).ready(function() {
+  function findProvince(id) {
+    for(var i = 0; i < library.length; i++) {
+      if(id == library[i].id) {
+        return library[i];
+      }
+    }
+  }
+
+  function displayProvince(object) {
+    return "<h2>" + object.name + "</h2><p>NO. " + object.number + "</p>"
+  }
+</script>
+
+<script type="text/javascript">
+	var data = "<img id=\"info-box-close\" src=\"resources/close.png\">";
+	$(document).ready(function() {
 		$("svg").svgPanZoom();
 	});
 	$(document).on('click', 'path', function (e) {
 		$("#info-box").css('display', 'block');
-		$("#info-box").css({position:"absolute", left:e.pageX,top:e.pageY});   
-		$('#info-box').html($(this).data('header') + $(this).data('content') + data);
+		$("#info-box").css({position:"absolute", left:e.pageX,top:e.pageY}); 
+    $('#info-box').html(displayProvince(findProvince(e.target.id)) + data); 
+		//$('#info-box').html($(this).data('header') + $(this).data('content') + data);
+    //data-header="Yên Bái" data-content="63"
 	});
 	
 	$(document).on('click', '#info-box-close', function (e) {
@@ -164,7 +186,7 @@ h2 {
 	viewbox="-100 0 800 800"
     xml:space="preserve">
 
-    <path id="YenBai" fill="#EEEEEE" data-header="<h2>Yên Bái</h2>" data-content="<p>Số thứ tự: 63</p>" d="M162.9,163c-0.1-0.1-0.2-0.2-0.3-0.3l-0.3-0.2c-0.1-0.4-0.3-0.8-0.6-1c0.1-0.3,0-0.7-0.3-1
+    <path id="YenBai" fill="#EEEEEE" d="M162.9,163c-0.1-0.1-0.2-0.2-0.3-0.3l-0.3-0.2c-0.1-0.4-0.3-0.8-0.6-1c0.1-0.3,0-0.7-0.3-1
     c-0.2-0.3-0.5-0.4-0.9-0.4c-0.1,0-0.1,0-0.2,0l-0.6,0.1l-1.1,0.1c-0.4,0-0.8,0.3-1,0.7c-0.3-0.1-0.4-0.1-0.5-0.2
     c-0.2-0.1-0.3-0.2-0.5-0.3c-0.3-0.1-0.3-0.2-0.5-0.4c-0.3-0.5-0.8-0.9-1.4-0.9c-0.5,0-0.9,0.3-1.2,0.4l0,0c-0.1,0-0.2,0-0.3,0
     c-0.2,0-0.5,0-0.6-0.1c-0.1,0-0.2,0-0.3,0c-1.2,0-1.9,1.4-2.2,2c-0.1,0.1-0.3,0.4-0.5,0.6h-0.1c-0.2,0-0.4,0-0.7-0.1
